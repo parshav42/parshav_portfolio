@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* Custom theme definitions using Bhagwa/Saffron colors */
+@layer components {
+  /* Hero Section */
+  .hero-shell {
+    @apply relative;
+  }
+
+  .hero-eyebrow {
+    @apply text-[10px] font-semibold uppercase tracking-[0.25em] text-[#78716C];
+  }
+
+  .hero-wordmark {
+    @apply text-5xl font-bold tracking-[-0.035em] text-[#1C1917] sm:text-6xl;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply text-sm font-medium text-[#1C1917] transition hover:text-[#F97316];
+  }
+
+  .mobile-nav-link {
+    @apply block rounded-lg px-4 py-3 text-sm font-medium text-[#1C1917] transition hover:bg-[#FFEDD5] hover:text-[#F97316];
+  }
+
+  /* Call-to-Action Button */
+  .cta-button {
+    @apply inline-flex items-center gap-2 rounded-lg bg-[#F97316] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#EA580C] active:bg-[#C2410C] shadow-[0_4px_12px_rgba(249,115,22,0.3)] hover:shadow-[0_6px_20px_rgba(249,115,22,0.4)];
+  }
+
+  /* Hero Orbs */
+  .hero-orb {
+    @apply absolute mix-blend-multiply blur-3xl;
+  }
+
+  .hero-orb-left {
+    @apply -top-1/2 -left-1/4 w-96 h-96 bg-gradient-to-br from-[#F97316]/20 to-[#FFEDD5]/5 rounded-full;
+  }
+
+  .hero-orb-right {
+    @apply -bottom-1/3 -right-1/4 w-96 h-96 bg-gradient-to-tl from-[#FED7AA]/10 to-[#F97316]/5 rounded-full;
+  }
+
+  /* Neural Background */
+  .neural-background {
+    @apply absolute inset-0 h-full w-full;
+  }
+
+  /* AI Lab Section */
+  .ai-lab-section {
+    @apply relative py-20 md:py-24;
+  }
+
+  /* Project Network */
+  .project-network {
+    @apply relative;
+  }
+
+  .network-connection {
+    @apply absolute pointer-events-none;
+  }
+
+  .network-connection-one {
+    @apply top-20 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FED7AA]/20 to-transparent;
+  }
+
+  .network-connection-two {
+    @apply top-64 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FDBA74]/10 to-transparent;
+  }
+
+  /* Project Node */
+  .project-node-float {
+    @apply relative;
+  }
+
+  .project-node {
+    @apply relative flex flex-col gap-5 rounded-2xl border border-[#FED7AA] bg-white/50 p-6 backdrop-blur-sm transition hover:border-[#FDBA74] hover:bg-white/70 hover:shadow-[0_8px_24px_rgba(249,115,22,0.15)];
+  }
+
+  .project-node-upcoming {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .project-node-copy {
+    @apply flex flex-col gap-2;
+  }
+
+  .project-node-name {
+    @apply block text-lg font-semibold text-[#1C1917];
+  }
+
+  .project-node-category {
+    @apply block text-xs font-medium uppercase tracking-[0.12em] text-[#F97316];
+  }
+
+  .project-node-description {
+    @apply block text-sm text-[#57534E] line-clamp-3;
+  }
+
+  .node-index {
+    @apply block text-[10px] font-bold uppercase tracking-[0.2em] text-[#78716C];
+  }
+
+  .node-status {
+    @apply inline-flex rounded-full bg-[#FFEDD5] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#F97316];
+  }
+
+  .node-action {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#F97316] transition group-hover:gap-3;
+  }
+
+  /* Project Preview */
+  .project-preview-backdrop {
+    @apply fixed inset-0 z-40 flex items-center justify-center bg-[#1C1917]/50 p-4 backdrop-blur-sm;
+  }
+
+  .project-preview {
+    @apply relative z-50 max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-8 shadow-2xl;
+  }
+
+  .preview-label {
+    @apply text-xs font-bold uppercase tracking-[0.12em] text-[#78716C];
+  }
+
+  .preview-copy {
+    @apply mt-2 text-sm leading-6 text-[#57534E];
+  }
+
+  .preview-grid {
+    @apply grid gap-6 md:grid-cols-2;
+  }
+
+  .preview-action {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-[#FED7AA] px-4 py-3 text-sm font-medium text-[#F97316] transition hover:border-[#FDBA74] hover:bg-[#FFEDD5] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .preview-action-primary {
+    @apply border-none bg-[#F97316] text-white hover:bg-[#EA580C];
+  }
+
+  .preview-close {
+    @apply relative flex h-9 w-9 items-center justify-center rounded-lg text-[#1C1917] transition hover:bg-[#FFEDD5];
+  }
+
+  /* Placeholder Section */
+  .placeholder-section {
+    @apply relative py-16 md:py-24;
+  }
+
+  /* Movie Intelligence Styles */
+  .movie-experience {
+    @apply relative min-h-screen bg-[#FFFCF7] text-[#1C1917];
+  }
+
+  .movie-header {
+    @apply border-b border-[#FED7AA] bg-white/80 backdrop-blur-sm;
+  }
+
+  .movie-back-button {
+    @apply inline-flex items-center gap-2 text-sm font-medium text-[#F97316] transition hover:text-[#EA580C];
+  }
+
+  .movie-ready {
+    @apply inline-flex items-center gap-2 text-sm font-medium text-[#78716C];
+  }
+
+  .movie-ready i {
+    @apply block h-2 w-2 rounded-full bg-[#F97316] animate-pulse;
+  }
+
+  .movie-intro {
+    @apply mb-16;
+  }
+
+  .movie-intro h1 {
+    @apply mt-6 text-4xl font-bold tracking-[-0.04em] text-[#1C1917] sm:text-5xl;
+  }
+
+  .movie-intro p {
+    @apply mt-4 max-w-xl text-lg text-[#57534E] leading-relaxed;
+  }
+
+  .movie-workspace {
+    @apply relative grid gap-8 md:grid-cols-2;
+  }
+
+  .movie-primary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#F97316] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#EA580C] shadow-[0_4px_12px_rgba(249,115,22,0.3)];
+  }
+
+  .movie-engineering {
+    @apply mt-24 grid gap-12 md:grid-cols-3;
+  }
+
+  .movie-section-label {
+    @apply text-xs font-bold uppercase tracking-[0.12em] text-[#78716C];
+  }
+
+  .movie-engineering h2 {
+    @apply mt-3 text-2xl font-bold tracking-[-0.03em] text-[#1C1917];
+  }
+
+  .movie-engineering p {
+    @apply mt-4 text-sm text-[#57534E] leading-6;
+  }
+
+  .movie-pipeline {
+    @apply mt-6 flex flex-col gap-4;
+  }
+
+  .movie-pipeline li {
+    @apply flex items-center gap-3;
+  }
+
+  .movie-pipeline span {
+    @apply text-sm font-medium text-[#1C1917];
+  }
+
+  .movie-pipeline i {
+    @apply h-px flex-1 bg-gradient-to-r from-[#FED7AA] to-transparent;
+  }
+
+  .movie-demo-note {
+    @apply mt-8 flex gap-4 rounded-lg bg-[#FFEDD5] p-4;
+  }
+
+  .movie-demo-note p {
+    @apply text-sm text-[#C2410C];
+  }
+
+  .project-flow {
+    @apply mt-6 flex flex-col gap-4;
+  }
+
+  .project-flow li {
+    @apply flex items-center gap-3;
+  }
+
+  .project-flow span {
+    @apply text-sm text-[#1C1917];
+  }
+
+  .project-flow i {
+    @apply h-px flex-1 bg-gradient-to-r from-[#FED7AA] to-transparent;
+  }
+}
