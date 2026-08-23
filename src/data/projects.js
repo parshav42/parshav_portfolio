@@ -19,8 +19,8 @@ export const projects = [
     description: 'Ask questions and receive answers grounded in retrieved knowledge.',
     problem: 'Useful knowledge is difficult to access when it is spread across documents and sources.',
     technology: 'Retrieval-augmented generation with source-grounded language models.',
-    status: 'Concept in development',
-    actionLabel: 'Ask the System',
+    status: 'Interactive demo',
+    actionLabel: 'Ask Knowledge Engine',
     flow: ['Question', 'Knowledge retrieval', 'Grounded reasoning', 'Useful answer'],
   },
   {

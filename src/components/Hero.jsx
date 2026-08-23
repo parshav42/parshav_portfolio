@@ -24,7 +24,7 @@ export default function Hero() {
         variants={{ visible: { transition: { staggerChildren: 0.13, delayChildren: 0.28 } } }}
       >
         <motion.p variants={reveal} transition={{ duration: 0.65 }} className="hero-eyebrow">
-          System online <span className="mx-2 text-[#F97316]/60">/</span> portfolio 01
+          System online <span className="mx-2 text-saffron/60">/</span> portfolio 01
         </motion.p>
         <motion.h1 id="hero-title" variants={reveal} transition={{ duration: 0.72 }} className="mt-6">
           <Wordmark className="hero-wordmark" />
@@ -32,14 +32,14 @@ export default function Hero() {
         <motion.p
           variants={reveal}
           transition={{ duration: 0.68 }}
-          className="mt-5 max-w-2xl text-[0.68rem] font-semibold tracking-[0.2em] text-[#F97316] sm:text-xs sm:tracking-[0.3em]"
+          className="mt-5 max-w-2xl text-[0.68rem] font-semibold tracking-[0.2em] text-saffron-strong sm:text-xs sm:tracking-[0.3em]"
         >
-          ML ENGINEER <span className="px-1.5 text-[#F97316]">·</span> RAG DEVELOPER
+          ML ENGINEER <span className="px-1.5 text-saffron/50">·</span> RAG DEVELOPER
         </motion.p>
         <motion.p
           variants={reveal}
           transition={{ duration: 0.68 }}
-          className="mt-8 max-w-xl text-xl font-light leading-relaxed text-[#64748B] sm:text-2xl"
+          className="mt-8 max-w-xl text-xl font-light leading-relaxed text-ink-soft sm:text-2xl"
         >
           I build intelligent systems that people can actually use.
         </motion.p>
@@ -55,7 +55,7 @@ export default function Hero() {
           </motion.a>
         </motion.div>
       </motion.div>
-      <div className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-[10px] font-medium uppercase tracking-[0.25em] text-[#64748B]">
+      <div className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-[10px] font-medium uppercase tracking-[0.25em] text-ink-muted">
         Explore below
       </div>
     </section>

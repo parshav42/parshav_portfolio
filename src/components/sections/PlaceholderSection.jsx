@@ -13,8 +13,8 @@ export default function PlaceholderSection({ id, label, title, description }) {
         transition={{ duration: 0.5 }}
       >
         <p className="hero-eyebrow">{label}</p>
-        <h2 id={`${id}-title`} className="mt-4 text-3xl font-medium tracking-[-0.04em] text-[#0F172A] sm:text-4xl">{title}</h2>
-        <p className="mt-4 max-w-xl text-sm leading-6 text-[#64748B]">{description}</p>
+        <h2 id={`${id}-title`} className="mt-4 text-3xl font-medium tracking-[-0.04em] text-ink sm:text-4xl">{title}</h2>
+        <p className="mt-4 max-w-xl text-sm leading-6 text-ink-soft">{description}</p>
       </motion.div>
     </section>
   )

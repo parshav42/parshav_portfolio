@@ -61,8 +61,8 @@ export default function ProjectPreview({ project, onClose }) {
             <div className="flex items-start justify-between gap-5">
               <div>
                 <p className="hero-eyebrow">SYSTEM {project.number}</p>
-                <h2 id="project-preview-title" className="mt-3 text-3xl font-medium tracking-[-0.045em] text-[#0F172A] sm:text-4xl">{project.name}</h2>
-                <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-[#F97316]">{project.category}</p>
+                <h2 id="project-preview-title" className="mt-3 text-3xl font-medium tracking-[-0.045em] text-ink sm:text-4xl">{project.name}</h2>
+                <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-saffron-strong">{project.category}</p>
               </div>
               <button ref={closeButtonRef} className="preview-close" type="button" onClick={onClose} aria-label="Close project preview">
                 <X size={19} aria-hidden="true" />
@@ -92,7 +92,7 @@ export default function ProjectPreview({ project, onClose }) {
               </ol>
             </div>
 
-            <p className="mt-7 text-sm text-[#64748B]">Status: <span className="text-[#0F172A]">{project.status}</span></p>
+            <p className="mt-7 text-sm text-ink-soft">Status: <span className="text-ink">{project.status}</span></p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button className="preview-action preview-action-primary" type="button" disabled>
                 Try Live Demo <ArrowUpRight size={16} aria-hidden="true" />

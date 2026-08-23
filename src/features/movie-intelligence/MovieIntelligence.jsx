@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import AIAnalysis from './components/AIAnalysis'
 import MovieSearch from './components/MovieSearch'
@@ -9,6 +9,7 @@ import { getRecommendations, searchMovies } from './services/recommendationServi
 
 export default function MovieIntelligence({ onExit }) {
   const [query, setQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [status, setStatus] = useState('idle')
   const [activeStep, setActiveStep] = useState(0)
@@ -16,7 +17,20 @@ export default function MovieIntelligence({ onExit }) {
   const timeoutsRef = useRef([])
   const requestIdRef = useRef(0)
   const shouldReduceMotion = useReducedMotion()
-  const searchResults = useMemo(() => searchMovies(query), [query])
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setSearchResults([])
+      return
+    }
+
+    const handler = setTimeout(async () => {
+      const results = await searchMovies(query)
+      setSearchResults(results)
+    }, 300)
+
+    return () => clearTimeout(handler)
+  }, [query])
 
   const clearTimers = () => { timeoutsRef.current.forEach(window.clearTimeout); timeoutsRef.current = [] }
   useEffect(() => () => { requestIdRef.current += 1; clearTimers() }, [])

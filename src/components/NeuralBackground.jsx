@@ -2,8 +2,20 @@ import { useEffect, useRef } from 'react'
 import useReducedMotion from '../hooks/useReducedMotion'
 
 const MOBILE_BREAKPOINT = 640
-const LINK_DISTANCE = 132
-const POINTER_RADIUS = 176
+const LINK_DISTANCE = 150
+const POINTER_RADIUS = 280
+const POINTER_STRONG_RADIUS = 180
+
+// Saffron particle/connection tones, sourced from the theme in src/index.css.
+const NODE_RGB_FALLBACK = '234, 88, 12'
+const LINK_RGB_FALLBACK = '194, 65, 12'
+const GLOW_RGB = '249, 115, 22'
+
+const readThemeRgb = (name, fallback) => {
+  if (typeof window === 'undefined') return fallback
+  const value = window.getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  return value || fallback
+}
 
 export default function NeuralBackground() {
   const canvasRef = useRef(null)
@@ -13,6 +25,8 @@ export default function NeuralBackground() {
     const canvas = canvasRef.current
     if (!canvas) return undefined
     const context = canvas.getContext('2d')
+    const nodeRgb = readThemeRgb('--neural-node-rgb', NODE_RGB_FALLBACK)
+    const linkRgb = readThemeRgb('--neural-link-rgb', LINK_RGB_FALLBACK)
     let frameId
     let isVisible = true
     let isDocumentVisible = !document.hidden
@@ -45,39 +59,102 @@ export default function NeuralBackground() {
 
     const draw = () => {
       context.clearRect(0, 0, width, height)
+      
+      // Update node positions and handle pointer attraction
       for (const node of nodes) {
         if (!shouldReduceMotion) {
           node.x += node.vx
           node.y += node.vy
+          
+          if (pointer.active) {
+            const dx = pointer.x - node.x
+            const dy = pointer.y - node.y
+            const distance = Math.hypot(dx, dy)
+            if (distance < POINTER_RADIUS) {
+              const attraction = (1 - distance / POINTER_RADIUS) * 0.5
+              const pull = attraction * 0.15
+              node.x += (dx / Math.max(1, distance)) * pull
+              node.y += (dy / Math.max(1, distance)) * pull
+            }
+          }
+
           if (node.x < -10 || node.x > width + 10) node.vx *= -1
           if (node.y < -10 || node.y > height + 10) node.vy *= -1
         }
       }
 
+      // Draw connection lines
       for (let index = 0; index < nodes.length; index += 1) {
         for (let peerIndex = index + 1; peerIndex < nodes.length; peerIndex += 1) {
           const node = nodes[index]
           const peer = nodes[peerIndex]
           const distance = Math.hypot(node.x - peer.x, node.y - peer.y)
           if (distance > LINK_DISTANCE) continue
-          const pointerDistance = pointer.active ? Math.min(Math.hypot(node.x - pointer.x, node.y - pointer.y), Math.hypot(peer.x - pointer.x, peer.y - pointer.y)) : POINTER_RADIUS
-          const response = Math.max(0, 1 - pointerDistance / POINTER_RADIUS)
+          
+          let response = 0
+          if (pointer.active) {
+            const d1 = Math.hypot(node.x - pointer.x, node.y - pointer.y)
+            const d2 = Math.hypot(peer.x - pointer.x, peer.y - pointer.y)
+            const pointerDistance = Math.min(d1, d2)
+            
+            if (pointerDistance < POINTER_RADIUS) {
+              const baseResponse = 1 - pointerDistance / POINTER_RADIUS
+              const strongResponse = pointerDistance < POINTER_STRONG_RADIUS 
+                ? (1 - pointerDistance / POINTER_STRONG_RADIUS) 
+                : 0
+              response = baseResponse * 0.4 + strongResponse * 0.6
+            }
+          }
+
           context.beginPath()
           context.moveTo(node.x, node.y)
           context.lineTo(peer.x, peer.y)
-          context.strokeStyle = `rgba(249, 115, 22, ${0.055 + response * 0.2})`
-          context.lineWidth = 0.45 + response * 0.45
+          
+          // Connection line color: idle rgba(194, 65, 12, 0.18), active 0.65
+          const alpha = 0.18 + response * 0.47
+          context.strokeStyle = `rgba(${linkRgb}, ${alpha})`
+          
+          // Line thickness: normal ~1px, active up to 2px
+          context.lineWidth = 0.8 + response * 1.2
           context.stroke()
+
+          // Add subtle glow for strongly active connections
+          if (response > 0.5) {
+            context.strokeStyle = `rgba(${GLOW_RGB}, ${response * 0.25})`
+            context.lineWidth = 2.0 + response * 1.0
+            context.stroke()
+          }
         }
       }
 
+      // Draw particles
       nodes.forEach((node) => {
-        const distance = pointer.active ? Math.hypot(node.x - pointer.x, node.y - pointer.y) : POINTER_RADIUS
-        const response = Math.max(0, 1 - distance / POINTER_RADIUS)
+        let response = 0
+        if (pointer.active) {
+          const distance = Math.hypot(node.x - pointer.x, node.y - pointer.y)
+          if (distance < POINTER_RADIUS) {
+            const baseResponse = 1 - distance / POINTER_RADIUS
+            const strongResponse = distance < POINTER_STRONG_RADIUS 
+              ? (1 - distance / POINTER_STRONG_RADIUS) 
+              : 0
+            response = baseResponse * 0.3 + strongResponse * 0.7
+          }
+        }
+
         context.beginPath()
-        context.arc(node.x, node.y, node.radius + response * 0.8, 0, Math.PI * 2)
-        context.fillStyle = `rgba(249, 115, 22, ${0.34 + response * 0.5})`
+        context.arc(node.x, node.y, node.radius + response * 1.0, 0, Math.PI * 2)
+        
+        // Particle color: idle rgba(234, 88, 12, 0.55), active 0.95
+        context.fillStyle = `rgba(${nodeRgb}, ${0.55 + response * 0.4})`
         context.fill()
+        
+        // Soft glow for active particles
+        if (response > 0.3) {
+          context.shadowBlur = 8 * response
+          context.shadowColor = `rgba(${GLOW_RGB}, ${0.4 * response})`
+          context.fill()
+          context.shadowBlur = 0 // Reset for other draws
+        }
       })
     }
 

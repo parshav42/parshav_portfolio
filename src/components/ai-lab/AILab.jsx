@@ -4,10 +4,20 @@ import { projects } from '../../data/projects'
 import ProjectNetwork from './ProjectNetwork'
 import ProjectPreview from './ProjectPreview'
 
-export default function AILab({ onOpenMovieIntelligence }) {
+export default function AILab({ onOpenMovieIntelligence, onOpenKnowledgeEngine }) {
   const [selectedProjectId, setSelectedProjectId] = useState(null)
   const selectedProject = projects.find((project) => project.id === selectedProjectId) ?? null
   const shouldReduceMotion = useReducedMotion()
+
+  const handleSelectProject = (projectId) => {
+    if (projectId === 'movie-intelligence') {
+      onOpenMovieIntelligence()
+    } else if (projectId === 'knowledge-engine') {
+      onOpenKnowledgeEngine()
+    } else {
+      setSelectedProjectId(projectId)
+    }
+  }
 
   return (
     <section id="ai-lab" className="ai-lab-section" aria-labelledby="ai-lab-title">
@@ -20,15 +30,15 @@ export default function AILab({ onOpenMovieIntelligence }) {
         >
           <p className="hero-eyebrow">A connected ecosystem</p>
           <div className="mt-5 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 id="ai-lab-title" className="max-w-xl text-4xl font-medium tracking-[-0.045em] text-[#0F172A] sm:text-5xl">
+            <h2 id="ai-lab-title" className="max-w-xl text-4xl font-medium tracking-[-0.045em] text-ink sm:text-5xl">
               Explore the AI Lab.
             </h2>
-            <p className="max-w-sm text-sm leading-6 text-[#64748B]">
+            <p className="max-w-sm text-sm leading-6 text-ink-soft">
               Interactive systems built around machine learning, retrieval, and intelligent user experiences.
             </p>
           </div>
         </motion.div>
-        <ProjectNetwork projects={projects} onSelectProject={(projectId) => projectId === 'movie-intelligence' ? onOpenMovieIntelligence() : setSelectedProjectId(projectId)} />
+        <ProjectNetwork projects={projects} onSelectProject={handleSelectProject} />
       </div>
       <ProjectPreview project={selectedProject} onClose={() => setSelectedProjectId(null)} />
     </section>
