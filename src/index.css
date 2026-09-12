@@ -21,12 +21,12 @@
 
   /* Text */
   --color-ink: #1C1917;
-  --color-ink-soft: #57534E;
-  --color-ink-muted: #78716C;
+  --color-ink-soft: #44403C;
+  --color-ink-muted: #57534E;
 
   /* Borders */
-  --color-line: #FED7AA;
-  --color-line-strong: #FDBA74;
+  --color-line: #E7E5E4;
+  --color-line-strong: #D6D3D1;
 
   /* Warm saffron shadows */
   --shadow-cta: 0 4px 12px rgba(249, 115, 22, 0.3);
@@ -80,8 +80,15 @@
   }
 
   .about-panel {
-    @apply rounded-2xl border border-line/80 bg-white/55 p-6 text-sm leading-7 text-ink-soft shadow-node backdrop-blur-md sm:p-8;
+    @apply rounded-2xl border border-line bg-white/70 p-6 text-sm leading-7 text-ink-soft shadow-sm backdrop-blur-md sm:p-8;
   }
+
+  .about-role-card {
+    @apply mb-6 border-l-2 border-saffron bg-saffron-soft/45 px-4 py-3;
+  }
+
+  .about-role-card p { @apply text-xs font-bold uppercase tracking-[0.16em] text-saffron-deep; }
+  .about-role-card span { @apply mt-1 block text-xs leading-5 text-ink-soft; }
 
   .about-credential {
     @apply flex items-center gap-3 border-t border-line/70 pt-5 text-sm text-ink;
@@ -101,24 +108,34 @@
 
   .journey-timeline::before {
     content: '';
-    @apply absolute bottom-5 left-[4.25rem] top-5 w-px bg-gradient-to-b from-saffron via-line-strong to-transparent md:left-[5.25rem];
+    @apply absolute bottom-5 left-3 top-5 w-px bg-gradient-to-b from-saffron via-stone-300 to-transparent sm:left-[4.25rem] md:left-[5.25rem];
   }
 
   .journey-item {
-    @apply relative grid grid-cols-[4rem_1rem_1fr] items-start gap-4 pb-8 last:pb-0 md:grid-cols-[5rem_1rem_1fr] md:gap-5;
+    @apply relative grid grid-cols-[1rem_1fr] items-start gap-4 pb-8 pl-0 last:pb-0 sm:grid-cols-[4rem_1rem_1fr] sm:gap-4 md:grid-cols-[5rem_1rem_1fr] md:gap-5;
   }
+
+  .journey-item:nth-child(n+2) .journey-dot { @apply bg-stone-700 shadow-none; }
+  .journey-item:nth-child(3) .journey-dot { @apply bg-saffron; }
 
   .journey-year {
-    @apply pt-5 text-xs font-bold uppercase tracking-[0.12em] text-saffron-deep;
+    @apply sr-only pt-5 text-xs font-bold uppercase tracking-[0.12em] text-saffron-deep sm:not-sr-only;
   }
 
+  .journey-item:first-child .journey-year::after { content: 'Current'; @apply mt-2 block text-[9px] text-saffron; }
+
   .journey-dot {
-    @apply relative z-10 mt-5 h-3 w-3 rounded-full border-2 border-canvas bg-saffron shadow-cta;
+    @apply relative z-10 mt-5 h-3 w-3 rounded-full border-2 border-canvas bg-saffron shadow-cta sm:col-auto;
   }
 
   .journey-card {
-    @apply rounded-2xl border border-line/75 bg-white/50 p-5 backdrop-blur-md transition hover:border-line-strong hover:bg-white/70 hover:shadow-node sm:p-6;
+    @apply max-w-2xl rounded-2xl border border-line/75 bg-white/50 p-5 backdrop-blur-md transition hover:border-line-strong hover:bg-white/70 hover:shadow-node sm:p-6;
   }
+
+  .journey-state { @apply mb-3 inline-flex text-[9px] font-bold uppercase tracking-[0.14em]; }
+  .journey-state-current { @apply text-saffron; }
+  .journey-state-completed { @apply text-stone-600; }
+  .journey-state-project { @apply rounded bg-saffron px-2 py-1 text-white; }
 
   .journey-card h3 {
     @apply text-base font-semibold text-ink sm:text-lg;
@@ -137,7 +154,7 @@
   }
 
   .journey-projects-label {
-    @apply text-[10px] font-bold uppercase tracking-[0.14em] text-ink-muted;
+    @apply inline-flex rounded bg-saffron-soft px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-saffron-deep;
   }
 
   .journey-project-button {
@@ -166,25 +183,39 @@
   }
 
   .contact-form {
-    @apply rounded-2xl border border-line/80 bg-white/55 p-6 shadow-node backdrop-blur-md sm:p-8;
+    @apply rounded-2xl border border-line bg-white/70 p-6 shadow-sm backdrop-blur-md sm:p-8;
+  }
+
+  .field-group {
+    @apply relative mt-5 first:mt-0;
   }
 
   .contact-form label {
-    @apply mt-5 block text-xs font-bold uppercase tracking-[0.12em] text-ink-muted first:mt-0;
+    @apply pointer-events-none absolute left-4 top-3.5 origin-left text-sm text-ink-muted transition;
   }
 
   .contact-form input,
   .contact-form textarea {
-    @apply mt-2 w-full rounded-lg border border-line bg-white/70 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink-muted focus:border-saffron focus:ring-2 focus:ring-saffron/15;
+    @apply w-full rounded-lg border border-line bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-transparent focus:border-saffron focus:ring-4 focus:ring-saffron/10;
   }
 
   .contact-form textarea {
-    @apply resize-y;
+    @apply min-h-44 resize-y;
+  }
+
+  .field-group input:focus + label,
+  .field-group input:not(:placeholder-shown) + label,
+  .field-group textarea:focus + label,
+  .field-group textarea:not(:placeholder-shown) + label {
+    @apply -translate-y-6 scale-75 bg-white px-1 text-saffron;
   }
 
   .form-status {
-    @apply mt-4 text-xs leading-5 text-saffron-deep;
+    @apply mt-4 flex items-center justify-center gap-2 text-sm leading-5;
   }
+  .form-status-success { @apply text-emerald-700; }
+  .form-status-error { @apply text-red-700; }
+  .cta-button:hover .send-arrow { @apply translate-x-1 -translate-y-1; }
 
   .contact-links {
     @apply flex flex-col items-start gap-4;
@@ -199,20 +230,15 @@
   }
 
   .robot-assistant {
-    @apply fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-7 sm:right-7;
+    @apply fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-7 sm:right-7;
   }
 
   .robot-trigger {
-    @apply flex h-24 w-24 items-center justify-center rounded-full bg-transparent text-white transition focus-visible:outline-saffron sm:h-32 sm:w-32;
+    @apply flex h-14 w-14 items-center justify-center rounded-2xl border border-saffron/30 bg-white/90 text-saffron shadow-node backdrop-blur-md transition hover:border-saffron hover:bg-saffron hover:text-white focus-visible:outline-saffron sm:h-20 sm:w-20;
   }
 
   .robot-character {
-    @apply relative aspect-[4/5] h-auto w-24 overflow-visible sm:w-32;
-    filter: drop-shadow(0 8px 10px rgba(14, 165, 233, 0.22));
-  }
-
-  .robot-svg {
-    @apply h-full w-full overflow-visible;
+    @apply grid h-9 w-9 place-items-center sm:h-10 sm:w-10;
   }
 
   .robot-tooltip {
@@ -221,16 +247,7 @@
 
   .robot-tooltip::after {
     content: '';
-    @apply absolute -bottom-1.5 right-7 h-3 w-3 rotate-45 border-b border-r border-saffron/50 bg-white/90;
-  }
-
-  .robot-trigger:hover .robot-character {
-    filter: drop-shadow(0 10px 14px rgba(6, 182, 212, 0.34));
-  }
-
-  .robot-character::after {
-    content: '';
-    @apply pointer-events-none absolute bottom-0 left-1/2 h-2 w-3/5 -translate-x-1/2 rounded-full bg-slate-900/20 blur-md;
+    @apply absolute -bottom-1.5 right-9 h-3 w-3 rotate-45 border-b border-r border-saffron/50 bg-white/90;
   }
 
   .tech-arsenal-section {
@@ -241,48 +258,44 @@
     @apply grid gap-6 md:grid-cols-[1.15fr_0.85fr] md:items-end md:gap-16;
   }
 
-  .tech-pill-grid {
-    @apply grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5;
+  .tech-arsenal-grid {
+    @apply grid grid-cols-2 border-l border-t border-line sm:grid-cols-3 md:grid-cols-4;
   }
 
-  .tech-pill {
-    @apply flex min-w-0 items-center gap-2 rounded-xl border border-line/80 bg-white/60 px-3 py-3 text-sm font-semibold text-ink shadow-sm backdrop-blur-md transition hover:border-saffron hover:bg-white/85 hover:text-saffron hover:shadow-node;
+  .tech-arsenal-item {
+    @apply flex min-w-0 items-center gap-3 border-b border-r border-line bg-white/35 px-4 py-4 text-sm font-semibold text-ink transition hover:bg-saffron-soft/45 hover:text-saffron;
   }
 
-  .tech-pill svg {
+  .tech-arsenal-item svg {
     @apply shrink-0 text-saffron;
   }
 
-  .tech-pill span {
+  .tech-arsenal-item span {
     @apply truncate;
   }
 
-  .tech-pill small {
-    @apply ml-auto text-[9px] font-bold text-ink-muted;
-  }
-
   .impact-metrics {
-    @apply grid gap-4 sm:grid-cols-3;
+    @apply grid gap-8 border-t border-line pt-8 sm:grid-cols-3;
   }
 
   .impact-metric {
-    @apply flex min-h-32 flex-col justify-between rounded-2xl border border-line/80 bg-white/65 p-5 shadow-node backdrop-blur-md;
+    @apply flex min-h-32 flex-col justify-end;
   }
 
   .impact-metric svg {
-    @apply text-saffron;
+    @apply hidden;
   }
 
   .impact-metric strong {
-    @apply mt-4 block text-3xl font-semibold tracking-[-0.04em] text-ink sm:text-4xl;
+    @apply block text-5xl font-bold tracking-[-0.06em] text-stone-900 md:text-7xl;
   }
 
   .impact-metric > span {
-    @apply mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-ink-muted;
+    @apply mt-2 text-sm font-normal normal-case tracking-normal text-stone-500;
   }
 
   .robot-chat-window {
-    @apply flex h-[min(32rem,calc(100vh-7rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-line/80 bg-canvas/95 shadow-panel backdrop-blur-xl;
+    @apply flex h-[min(32rem,calc(100vh-6rem))] w-[calc(100vw-2rem)] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-line/80 bg-canvas/95 shadow-panel backdrop-blur-xl md:w-96 md:max-w-none;
   }
 
   .robot-chat-header {
@@ -388,14 +401,7 @@
 
   .hero-wordmark {
     @apply font-bold tracking-[-0.035em];
-    font-size: clamp(3.75rem, 12vw, 10.5rem);
-    text-shadow: 0 0 24px rgba(234, 88, 12, 0.3), 0 0 48px rgba(250, 204, 21, 0.16);
-    background: linear-gradient(110deg, #EA580C 0%, #FACC15 32%, #06B6D4 66%, #0284C7 100%);
-    background-size: 240% auto;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: wordmark-data-stream 4.5s linear infinite;
+    color: #1C1917;
   }
 
   .hero-wordmark-shell {
@@ -422,24 +428,18 @@
     50% { opacity: 0.9; transform: scale(1.04); }
   }
 
-  @keyframes wordmark-data-stream {
-    0% {
-      background-position: 0% center;
-      text-shadow: 0 0 24px rgba(234, 88, 12, 0.3), 0 0 48px rgba(250, 204, 21, 0.16);
-    }
-    50% {
-      text-shadow: 0 0 32px rgba(250, 204, 21, 0.42), 0 0 58px rgba(6, 182, 212, 0.2);
-    }
-    100% {
-      background-position: 240% center;
-      text-shadow: 0 0 24px rgba(234, 88, 12, 0.3), 0 0 48px rgba(250, 204, 21, 0.16);
-    }
-  }
-
   /* Navigation */
   .nav-link {
-    @apply text-sm font-medium text-ink transition hover:text-saffron;
+    @apply relative py-2 text-sm font-medium text-ink transition hover:text-saffron;
   }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-0 bg-saffron transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after { @apply w-full; }
 
   .nav-link.active {
     @apply text-saffron;
@@ -454,23 +454,19 @@
      @apply inline-flex items-center gap-2 rounded-lg bg-saffron px-6 py-3 text-sm font-medium text-white shadow-cta transition hover:bg-saffron-strong hover:shadow-cta-hover hover:ring-1 hover:ring-white/60 hover:ring-offset-2 hover:ring-offset-canvas active:bg-saffron-deep;
   }
 
-  /* Hero Orbs — soft saffron glow */
-  .hero-orb {
-    @apply absolute mix-blend-multiply blur-3xl;
-  }
-
-  .hero-orb-left {
-    @apply -top-1/2 -left-1/4 h-96 w-96 rounded-full bg-gradient-to-br from-saffron/20 to-saffron-soft/5;
-  }
-
-  .hero-orb-right {
-    @apply -bottom-1/3 -right-1/4 h-96 w-96 rounded-full bg-gradient-to-tl from-saffron-light/10 to-saffron/5;
+  .cta-button-secondary {
+    @apply border border-saffron bg-white/70 text-saffron shadow-none hover:bg-saffron-soft hover:text-saffron-deep hover:ring-saffron/20;
   }
 
   /* Neural Background */
   .neural-background {
     @apply absolute inset-0 h-full w-full;
   }
+
+  .hero-portrait-wrap { @apply relative z-10 grid place-items-center; }
+  .hero-portrait { @apply absolute z-10 h-[86%] w-[86%] rounded-full border-4 border-white object-cover object-[center_38%] shadow-[0_18px_45px_rgba(194,65,12,0.28)]; }
+  .hero-portrait-orbit { @apply absolute inset-0 text-saffron opacity-25; }
+  .hero-portrait-neural-mask { @apply pointer-events-none absolute inset-0 z-[1]; background: radial-gradient(circle at 50% 43%, rgba(255,252,247,.72) 0, rgba(255,252,247,.45) 15%, transparent 34%); }
 
   /* AI Lab Section */
   .ai-lab-section {
@@ -480,7 +476,7 @@
   /* Project Network */
   .project-network {
     @apply relative;
-    min-height: 420px;
+    min-height: 0;
   }
 
   .project-network-lines {
@@ -488,9 +484,9 @@
   }
 
   .project-network-lines line {
-    stroke: rgba(234, 88, 12, 0.3);
-    stroke-width: 1.5;
-    stroke-dasharray: 5 8;
+    stroke: rgba(120, 113, 108, 0.18);
+    stroke-width: 1;
+    stroke-dasharray: 4 10;
   }
 
   /* Project Node — white card, saffron accent */
@@ -499,8 +495,18 @@
   }
 
   .project-node {
-    @apply relative flex min-h-64 flex-col gap-5 rounded-2xl border border-line/80 bg-white/45 p-6 backdrop-blur-md transition hover:-translate-y-1 hover:border-saffron hover:bg-white/65 hover:shadow-panel;
+    @apply relative flex min-h-0 flex-col gap-4 overflow-hidden rounded-2xl border border-line bg-white/70 text-left backdrop-blur-md transition duration-300 hover:border-orange-500 hover:bg-white hover:shadow-lg;
   }
+
+  .project-node-mark {
+    @apply absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-white/80 text-saffron shadow-sm transition group-hover:rotate-6;
+  }
+
+  .project-visual { @apply relative grid aspect-[16/7] w-full place-items-center overflow-hidden rounded-xl bg-stone-100 text-stone-700; }
+  .project-visual-sugarcane-disease-detection { @apply bg-gradient-to-br from-amber-100 via-orange-50 to-lime-100 text-emerald-800; }
+  .project-visual-movie-intelligence { @apply bg-gradient-to-br from-stone-900 via-stone-700 to-orange-900 text-orange-100; }
+  .project-visual-grid { @apply absolute inset-0 opacity-50; background-image: linear-gradient(rgba(255,255,255,.24) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.24) 1px, transparent 1px); background-size: 18px 18px; }
+  .project-visual svg { @apply relative z-10 transition duration-500 group-hover:scale-[1.03]; }
 
   .project-node-upcoming {
     @apply cursor-not-allowed opacity-60;
@@ -511,7 +517,7 @@
   }
 
   .project-node-name {
-    @apply block text-lg font-semibold text-ink;
+    @apply block text-base font-semibold text-ink sm:text-lg;
   }
 
   .project-node-category {
@@ -519,15 +525,18 @@
   }
 
   .project-node-description {
-    @apply line-clamp-3 block text-sm text-ink-soft;
+    @apply line-clamp-2 block text-sm leading-6 text-ink-soft;
   }
+
+  .project-metrics { @apply flex flex-wrap gap-x-4 gap-y-1 border-y border-line py-3 text-xs font-semibold text-ink; }
+  .project-metrics span { @apply relative after:ml-4 after:text-saffron after:content-['|'] last:after:hidden; }
 
   .project-tech-stack {
     @apply mt-auto flex flex-wrap gap-2 pt-1;
   }
 
   .project-tech-stack span {
-    @apply rounded-full border border-line bg-saffron-soft/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-saffron-deep;
+    @apply bg-stone-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-stone-600;
   }
 
   .node-index {
@@ -539,8 +548,9 @@
   }
 
   .node-action {
-    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-saffron transition group-hover:gap-3;
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-saffron transition;
   }
+  .node-action svg { @apply transition-transform group-hover:translate-x-1; }
 
   /* Project Preview */
   .project-preview-backdrop {

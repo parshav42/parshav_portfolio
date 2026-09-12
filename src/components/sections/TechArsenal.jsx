@@ -8,7 +8,7 @@ const technologies = [
 ]
 
 const metrics = [
-  ['Images Trained', Brain, 10000], ['Model Accuracy', Target, 85], ['ML Models Built', Brain, 30],
+  ['images', Brain, 10000], ['best model accuracy', Target, 85], ['models built', Brain, 30],
 ]
 
 function MetricCounter({ value, shouldReduceMotion }) {
@@ -53,19 +53,17 @@ export default function TechArsenal() {
           </div>
           <p className="section-lede">A practical toolkit spanning model development, product interfaces, and dependable deployment.</p>
         </div>
-        <div className="tech-pill-grid mt-10">
-          {technologies.map(([name, Icon], index) => (
-            <motion.div key={name} className="tech-pill" whileHover={shouldReduceMotion ? undefined : { scale: 1.05, y: -3 }} transition={{ type: 'spring', stiffness: 320, damping: 20 }}>
+        <div className="tech-arsenal-grid mt-10">
+          {technologies.map(([name, Icon]) => (
+            <motion.div key={name} className="tech-arsenal-item" whileHover={shouldReduceMotion ? undefined : { y: -2 }}>
               <Icon size={17} aria-hidden="true" />
               <span>{name}</span>
-              <small>0{index + 1}</small>
             </motion.div>
           ))}
         </div>
         <div className="impact-metrics mt-12">
           {metrics.map(([label, Icon, value]) => (
             <div className="impact-metric" key={label}>
-              <Icon size={21} aria-hidden="true" />
               <strong><MetricCounter value={value} shouldReduceMotion={shouldReduceMotion} /></strong>
               <span>{label}</span>
             </div>

@@ -110,8 +110,8 @@ export default function NeuralBackground() {
           context.moveTo(node.x, node.y)
           context.lineTo(peer.x, peer.y)
           
-          // Connection line color: idle rgba(194, 65, 12, 0.18), active 0.65
-          const alpha = 0.18 + response * 0.47
+          // Connection line opacity is intentionally restrained so the hero copy stays dominant.
+          const alpha = 0.126 + response * 0.329
           context.strokeStyle = `rgba(${linkRgb}, ${alpha})`
           
           // Line thickness: normal ~1px, active up to 2px
@@ -120,7 +120,7 @@ export default function NeuralBackground() {
 
           // Add subtle glow for strongly active connections
           if (response > 0.5) {
-            context.strokeStyle = `rgba(${GLOW_RGB}, ${response * 0.25})`
+            context.strokeStyle = `rgba(${GLOW_RGB}, ${response * 0.175})`
             context.lineWidth = 2.0 + response * 1.0
             context.stroke()
           }
@@ -204,5 +204,5 @@ export default function NeuralBackground() {
     }
   }, [shouldReduceMotion])
 
-  return <canvas ref={canvasRef} className="neural-background" aria-hidden="true" />
+  return <canvas ref={canvasRef} className="neural-background opacity-30" aria-hidden="true" />
 }

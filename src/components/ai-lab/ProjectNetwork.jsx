@@ -57,7 +57,7 @@ export default function ProjectNetwork({ projects, onSelectProject, onOpenEmbed 
           })}
         </svg>
       )}
-      <div className="relative z-10 mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:gap-8">
+      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
         {projects.map((project, index) => (
           <ProjectNode
             key={project.id}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
-import { Send, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { MessageCircle, Send, Sparkles, X } from 'lucide-react'
 import TicTacToe from './TicTacToe'
 
 const responses = {
@@ -67,86 +67,6 @@ function LinkedInCard() {
   )
 }
 
-function AnimatedRobot({ isOpen, isHovered, shouldReduceMotion }) {
-  const pointerX = useMotionValue(0)
-  const pointerY = useMotionValue(0)
-  const rotateY = useTransform(pointerX, [-1, 1], [-7, 7])
-  const rotateX = useTransform(pointerY, [-1, 1], [7, -7])
-  const pupilX = useTransform(pointerX, [-1, 1], [-3, 3])
-  const pupilY = useTransform(pointerY, [-1, 1], [2, -2])
-
-  useEffect(() => {
-    if (shouldReduceMotion) return undefined
-    const trackPointer = (event) => {
-      pointerX.set(Math.max(-1, Math.min(1, (event.clientX / window.innerWidth - 0.5) * 2)))
-      pointerY.set(Math.max(-1, Math.min(1, (event.clientY / window.innerHeight - 0.5) * 2)))
-    }
-    window.addEventListener('pointermove', trackPointer, { passive: true })
-    return () => window.removeEventListener('pointermove', trackPointer)
-  }, [pointerX, pointerY, shouldReduceMotion])
-
-  return (
-    <motion.div className="robot-character" style={shouldReduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 500 }} animate={shouldReduceMotion ? undefined : { y: isHovered || isOpen ? 0 : [0, -8, 0] }} transition={shouldReduceMotion ? undefined : { repeat: isHovered || isOpen ? 0 : Infinity, duration: 3, ease: 'easeInOut' }}>
-      <motion.svg className="robot-svg" viewBox="0 0 120 150" role="img" aria-label="Parshav's Assistant">
-        <defs>
-          <linearGradient id="robot-blue-shell" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#7DD3FC" /><stop offset="0.5" stopColor="#38BDF8" /><stop offset="1" stopColor="#0284C7" /></linearGradient>
-          <linearGradient id="robot-white-shell" x1="0" x2="0.8" y1="0" y2="1"><stop offset="0" stopColor="#FFFFFF" /><stop offset="1" stopColor="#BAE6FD" /></linearGradient>
-          <radialGradient id="robot-joint-glow" cx="35%" cy="25%"><stop offset="0" stopColor="#67E8F9" /><stop offset="1" stopColor="#0891B2" /></radialGradient>
-          <filter id="robot-shadow" x="-30%" y="-20%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#0F172A" floodOpacity="0.25" /></filter>
-          <filter id="robot-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-        </defs>
-
-        <motion.g className="robot-antenna" animate={shouldReduceMotion ? undefined : { rotate: [-4, 4, -4], y: [0, -2, 0] }} transition={shouldReduceMotion ? undefined : { duration: 2.6, repeat: Infinity, ease: 'easeInOut' }} style={{ originX: '60px', originY: '31px' }}>
-          <path d="M60 31V17" fill="none" stroke="#0F172A" strokeLinecap="round" strokeWidth="3" />
-          <motion.circle cx="60" cy="11" r="6" fill="#06B6D4" stroke="#0F172A" strokeWidth="2" filter="url(#robot-glow)" animate={shouldReduceMotion ? undefined : { scale: [0.9, 1.12, 0.9], opacity: [0.7, 1, 0.7] }} transition={shouldReduceMotion ? undefined : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
-        </motion.g>
-
-        <motion.g className="robot-head" filter="url(#robot-shadow)" animate={shouldReduceMotion ? undefined : { y: [0, -1, 0] }} transition={shouldReduceMotion ? undefined : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}>
-          <path d="M24 50c0-14 10-24 24-24h24c14 0 24 10 24 24v28c0 12-9 21-21 21H45c-12 0-21-9-21-21V50Z" fill="url(#robot-blue-shell)" stroke="#0F172A" strokeWidth="3" />
-          <path d="M32 53c0-8 7-14 15-14h26c8 0 15 6 15 14v20c0 7-6 12-13 12H45c-7 0-13-5-13-12V53Z" fill="#0F172A" stroke="#1E293B" strokeWidth="2" />
-          <path d="M38 46c10-7 28-7 42 0" fill="none" stroke="#BAE6FD" strokeLinecap="round" strokeOpacity="0.7" strokeWidth="3" />
-          <motion.g className="robot-eyes" animate={{ scaleY: isHovered || isOpen ? 1.15 : [1, 1, 0.1, 1, 1] }} transition={shouldReduceMotion || isHovered || isOpen ? { duration: 0.2 } : { duration: 4.4, repeat: Infinity, repeatDelay: 1.6, times: [0, 0.72, 0.77, 0.82, 1] }} style={{ originX: '60px', originY: '63px' }}>
-            <motion.circle cx="48" cy="63" r="5" fill="#06B6D4" filter="url(#robot-glow)" style={{ x: pupilX, y: pupilY }} />
-            <motion.circle cx="72" cy="63" r="5" fill="#06B6D4" filter="url(#robot-glow)" style={{ x: pupilX, y: pupilY }} />
-          </motion.g>
-          <path d="M53 76c5 4 9 4 14 0" fill="none" stroke="#FFFFFF" strokeLinecap="round" strokeWidth="2" />
-        </motion.g>
-
-        <motion.g className="robot-arm-left" animate={shouldReduceMotion ? undefined : { rotate: [-2, 2, -2] }} transition={shouldReduceMotion ? undefined : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' }} style={{ originX: '30px', originY: '104px' }}>
-          <rect x="29" y="100" width="12" height="9" rx="4.5" fill="url(#robot-joint-glow)" stroke="#0F172A" strokeWidth="2" />
-          <rect x="17" y="103" width="16" height="10" rx="5" fill="url(#robot-blue-shell)" stroke="#0F172A" strokeWidth="2" />
-          <circle cx="15" cy="108" r="5" fill="#0F172A" />
-          <rect x="7" y="104" width="11" height="9" rx="4.5" fill="url(#robot-white-shell)" stroke="#0F172A" strokeWidth="2" />
-        </motion.g>
-        <motion.g className="robot-arm-right" animate={shouldReduceMotion ? undefined : isHovered ? { rotate: [-18, 18, -18] } : { rotate: [-2, 2, -2] }} transition={shouldReduceMotion ? undefined : { duration: isHovered ? 0.55 : 3.5, repeat: Infinity, ease: 'easeInOut' }} style={{ originX: '90px', originY: '104px' }}>
-          <rect x="79" y="100" width="12" height="9" rx="4.5" fill="url(#robot-joint-glow)" stroke="#0F172A" strokeWidth="2" />
-          <rect x="87" y="103" width="16" height="10" rx="5" fill="url(#robot-blue-shell)" stroke="#0F172A" strokeWidth="2" />
-          <circle cx="105" cy="108" r="5" fill="#0F172A" />
-          <rect x="103" y="104" width="11" height="9" rx="4.5" fill="url(#robot-white-shell)" stroke="#0F172A" strokeWidth="2" />
-        </motion.g>
-
-        <motion.g className="robot-body" filter="url(#robot-shadow)" animate={shouldReduceMotion ? undefined : { y: [0, 1, 0] }} transition={shouldReduceMotion ? undefined : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}>
-          <path d="M35 96h50c7 0 12 6 12 13v17c0 7-6 11-13 11H36c-7 0-13-4-13-11v-17c0-7 5-13 12-13Z" fill="url(#robot-white-shell)" stroke="#0F172A" strokeWidth="3" />
-          <path d="M42 99h36v8H42z" fill="#0F172A" opacity="0.8" />
-          <path d="M48 114h24" stroke="#0EA5E9" strokeLinecap="round" strokeWidth="3" />
-          <circle cx="60" cy="124" r="4" fill="url(#robot-joint-glow)" stroke="#0F172A" strokeWidth="2" />
-        </motion.g>
-
-        <motion.g className="robot-leg-left" animate={shouldReduceMotion ? undefined : { rotate: [-1, 1, -1] }} transition={shouldReduceMotion ? undefined : { duration: 3.8, repeat: Infinity, ease: 'easeInOut' }} style={{ originX: '48px', originY: '133px' }}>
-          <rect x="38" y="132" width="20" height="11" rx="5" fill="url(#robot-blue-shell)" stroke="#0F172A" strokeWidth="2" />
-          <circle cx="48" cy="143" r="4" fill="#0F172A" />
-          <rect x="35" y="141" width="26" height="9" rx="4.5" fill="url(#robot-white-shell)" stroke="#0F172A" strokeWidth="2" />
-        </motion.g>
-        <motion.g className="robot-leg-right" animate={shouldReduceMotion ? undefined : { rotate: [1, -1, 1] }} transition={shouldReduceMotion ? undefined : { duration: 3.8, repeat: Infinity, ease: 'easeInOut' }} style={{ originX: '72px', originY: '133px' }}>
-          <rect x="62" y="132" width="20" height="11" rx="5" fill="url(#robot-blue-shell)" stroke="#0F172A" strokeWidth="2" />
-          <circle cx="72" cy="143" r="4" fill="#0F172A" />
-          <rect x="59" y="141" width="26" height="9" rx="4.5" fill="url(#robot-white-shell)" stroke="#0F172A" strokeWidth="2" />
-        </motion.g>
-      </motion.svg>
-    </motion.div>
-  )
-}
-
 export default function RobotAssistant() {
   const [isOpen, setIsOpen] = useState(false)
   const [message, setMessage] = useState('')
@@ -155,7 +75,6 @@ export default function RobotAssistant() {
   ])
   const inputRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
-  const [isHovered, setIsHovered] = useState(false)
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
 
   useEffect(() => {
@@ -249,12 +168,13 @@ export default function RobotAssistant() {
         className="robot-trigger"
         onClick={() => setIsOpen((open) => !open)}
         aria-label={isOpen ? 'Close assistant' : "Open Parshav's Assistant"}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
         whileTap={shouldReduceMotion ? undefined : { scale: 0.94, y: -6 }}
       >
-        <AnimatedRobot isOpen={isOpen} isHovered={isHovered} shouldReduceMotion={shouldReduceMotion} />
+        <span className="robot-character" aria-hidden="true">
+          <MessageCircle size={27} strokeWidth={1.8} />
+          <Sparkles className="absolute -right-2 -top-2 h-3.5 w-3.5" strokeWidth={2} />
+        </span>
       </motion.button>
     </div>
   )

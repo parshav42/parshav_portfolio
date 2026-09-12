@@ -24,6 +24,10 @@ export default function AboutPlaceholder() {
             </button>
           </div>
           <div className="about-panel">
+            <div className="about-role-card">
+              <p>ML Engineer</p>
+              <span>Focus: Computer Vision, Machine Learning, AI Systems</span>
+            </div>
             <p>I contributed to Ayushman Cowfit Pro, a live production application on the Google Play Store. I have built end-to-end projects including a computer vision crop disease detection system with 85% accuracy on 10,000+ images and a customer churn prediction model.</p>
             <div className="about-credential mt-7">
               <BadgeCheck size={22} aria-hidden="true" />

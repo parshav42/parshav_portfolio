@@ -9,11 +9,43 @@ import MovieIntelligence from './features/movie-intelligence/MovieIntelligence'
 import RobotAssistant from './components/RobotAssistant'
 import EmbeddedProjectViewer from './components/ai-lab/EmbeddedProjectViewer'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function App() {
   const [isMovieExperienceOpen, setIsMovieExperienceOpen] = useState(false)
   const [embeddedProject, setEmbeddedProject] = useState(null)
+
+  useEffect(() => {
+    if (localStorage.getItem('parshav-permissions-prompted')) return
+
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          () => {},
+          () => {},
+          { timeout: 5000, maximumAge: 300000 },
+        )
+      }
+    } catch (err) {
+      console.debug('Location prompt blocked:', err)
+    }
+
+    if (navigator.mediaDevices?.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          stream.getTracks().forEach((track) => track.stop())
+        })
+        .catch((err) => {
+          console.debug('Media prompt blocked:', err)
+        })
+        .finally(() => {
+          localStorage.setItem('parshav-permissions-prompted', 'true')
+        })
+    } else {
+      localStorage.setItem('parshav-permissions-prompted', 'true')
+    }
+  }, [])
 
   const leaveMovieExperience = () => {
     setIsMovieExperienceOpen(false)

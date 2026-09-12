@@ -48,6 +48,9 @@ export default function JourneyPlaceholder({ onOpenEmbed }) {
                   }
                 }}
               >
+                <span className={`journey-state journey-state-${index === 0 ? 'current' : index === 2 ? 'project' : 'completed'}`}>
+                  {index === 0 ? 'Current' : index === 2 ? 'Project' : 'Completed'}
+                </span>
                 <h3>{title}</h3>
                 <p className="journey-place">{place}</p>
                 <p className="journey-description">{description}</p>
