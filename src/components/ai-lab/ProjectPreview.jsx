@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, X } from 'lucide-react'
 
-export default function ProjectPreview({ project, onClose }) {
+export default function ProjectPreview({ project, onClose, onOpenEmbed }) {
   const dialogRef = useRef(null)
   const closeButtonRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
@@ -94,9 +94,15 @@ export default function ProjectPreview({ project, onClose }) {
 
             <p className="mt-7 text-sm text-ink-soft">Status: <span className="text-ink">{project.status}</span></p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <button className="preview-action preview-action-primary" type="button" disabled>
-                Try Live Demo <ArrowUpRight size={16} aria-hidden="true" />
-              </button>
+              {project.embedUrl && onOpenEmbed ? (
+                <button className="preview-action preview-action-primary" type="button" onClick={() => onOpenEmbed(project)}>
+                  Launch Embedded Demo <ArrowUpRight size={16} aria-hidden="true" />
+                </button>
+              ) : (
+                <button className="preview-action preview-action-primary" type="button" disabled>
+                  Try Live Demo <ArrowUpRight size={16} aria-hidden="true" />
+                </button>
+              )}
               <button className="preview-action" type="button" disabled>View Engineering Details</button>
               <button className="preview-action" type="button" disabled>GitHub — Coming Soon</button>
             </div>

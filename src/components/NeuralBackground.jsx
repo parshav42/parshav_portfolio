@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import useReducedMotion from '../hooks/useReducedMotion'
 
 const MOBILE_BREAKPOINT = 640
-const LINK_DISTANCE = 150
+const LINK_DISTANCE = 175
 const POINTER_RADIUS = 280
 const POINTER_STRONG_RADIUS = 180
 
@@ -36,7 +36,7 @@ export default function NeuralBackground() {
     const pointer = { x: -999, y: -999, active: false }
 
     const makeNodes = () => {
-      const count = window.innerWidth < MOBILE_BREAKPOINT ? 26 : 52
+      const count = window.innerWidth < MOBILE_BREAKPOINT ? 68 : 132
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,

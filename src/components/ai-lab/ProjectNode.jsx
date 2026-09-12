@@ -1,11 +1,12 @@
 import { ArrowUpRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 
-export default function ProjectNode({ project, index, onSelect }) {
+export default function ProjectNode({ project, index, onSelect, onOpenEmbed, nodeRef }) {
   const shouldReduceMotion = useReducedMotion()
 
   return (
     <motion.div
+      ref={nodeRef}
       className="project-node-float"
       initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -19,7 +20,13 @@ export default function ProjectNode({ project, index, onSelect }) {
         transition={shouldReduceMotion ? undefined : { duration: 4.8 + index * 0.4, repeat: Infinity, ease: 'easeInOut' }}
       whileHover={shouldReduceMotion ? undefined : { y: -6 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.99 }}
-      onClick={() => onSelect(project.id)}
+      onClick={() => {
+        if (project.isEmbeddable && project.embedUrl) {
+          onOpenEmbed(project)
+          return
+        }
+        onSelect(project.id)
+      }}
       aria-label={`Open ${project.name} preview`}
     >
       <span className="flex items-start justify-between gap-4">
@@ -30,6 +37,9 @@ export default function ProjectNode({ project, index, onSelect }) {
         <span className="project-node-name">{project.name}</span>
         <span className="project-node-category">{project.category}</span>
         <span className="project-node-description">{project.description}</span>
+      </span>
+      <span className="project-tech-stack" aria-label="Technology stack">
+        {(project.techStack ?? []).map((technology) => <span key={technology}>{technology}</span>)}
       </span>
       <span className="node-action">
         {project.actionLabel} <ArrowUpRight size={16} aria-hidden="true" />

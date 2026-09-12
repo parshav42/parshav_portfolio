@@ -4,7 +4,7 @@ import { projects } from '../../data/projects'
 import ProjectNetwork from './ProjectNetwork'
 import ProjectPreview from './ProjectPreview'
 
-export default function AILab({ onOpenMovieIntelligence, onOpenKnowledgeEngine }) {
+export default function AILab({ onOpenMovieIntelligence, onOpenEmbed }) {
   const [selectedProjectId, setSelectedProjectId] = useState(null)
   const selectedProject = projects.find((project) => project.id === selectedProjectId) ?? null
   const shouldReduceMotion = useReducedMotion()
@@ -12,8 +12,6 @@ export default function AILab({ onOpenMovieIntelligence, onOpenKnowledgeEngine }
   const handleSelectProject = (projectId) => {
     if (projectId === 'movie-intelligence') {
       onOpenMovieIntelligence()
-    } else if (projectId === 'knowledge-engine') {
-      onOpenKnowledgeEngine()
     } else {
       setSelectedProjectId(projectId)
     }
@@ -38,9 +36,17 @@ export default function AILab({ onOpenMovieIntelligence, onOpenKnowledgeEngine }
             </p>
           </div>
         </motion.div>
-        <ProjectNetwork projects={projects} onSelectProject={handleSelectProject} />
+        <ProjectNetwork
+          projects={projects}
+          onSelectProject={handleSelectProject}
+          onOpenEmbed={onOpenEmbed}
+        />
       </div>
-      <ProjectPreview project={selectedProject} onClose={() => setSelectedProjectId(null)} />
+      <ProjectPreview
+        project={selectedProject}
+        onClose={() => setSelectedProjectId(null)}
+        onOpenEmbed={onOpenEmbed}
+      />
     </section>
   )
 }
