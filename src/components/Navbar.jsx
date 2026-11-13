@@ -5,7 +5,6 @@ import Wordmark from './Wordmark'
 
 const navItems = [
   { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#ai-lab' },
   { label: 'Journey', href: '#journey' },
   { label: 'Contact', href: '#contact' },
 ]

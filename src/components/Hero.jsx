@@ -49,13 +49,13 @@ export default function Hero() {
         </motion.p>
         <motion.div variants={reveal} transition={{ duration: 0.6 }} className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:mt-10 sm:w-auto sm:flex-row">
           <motion.a
-            href="#ai-lab"
+            href="#journey"
             className="cta-button"
               whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.03 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 380, damping: 24 }}
           >
-            Explore My AI Lab <ArrowDownRight size={18} strokeWidth={1.8} aria-hidden="true" />
+            Explore My Journey <ArrowDownRight size={18} strokeWidth={1.8} aria-hidden="true" />
           </motion.a>
           <motion.button
             type="button"
