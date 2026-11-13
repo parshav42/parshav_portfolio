@@ -11,19 +11,6 @@ if (publicKey) {
   emailjs.init({ publicKey })
 }
 
-const getLocation = () => new Promise((resolve) => {
-  if (!navigator.geolocation) {
-    resolve('Location not shared')
-    return
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    ({ coords }) => resolve(`https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`),
-    () => resolve('Location not shared'),
-    { timeout: 5000, maximumAge: 300000 },
-  )
-})
-
 export default function ContactPlaceholder() {
   const [isSending, setIsSending] = useState(false)
   const [status, setStatus] = useState('')
@@ -42,12 +29,10 @@ export default function ContactPlaceholder() {
         throw new Error('EmailJS is not configured')
       }
 
-      const locationString = await getLocation()
       const templateParams = {
         name: formData.get('name'),
         email: formData.get('email'),
         message: formData.get('message'),
-        location: locationString,
       }
       console.log('Sending payload:', templateParams)
       await emailjs.send(serviceId, templateId, templateParams, { publicKey })

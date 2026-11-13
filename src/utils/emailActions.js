@@ -4,18 +4,6 @@ const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
-const getLocation = () => new Promise((resolve) => {
-  if (!navigator.geolocation) {
-    resolve('Location unavailable')
-    return
-  }
-  navigator.geolocation.getCurrentPosition(
-    ({ coords }) => resolve(`https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`),
-    () => resolve('Location unavailable'),
-    { timeout: 5000, maximumAge: 300000 },
-  )
-})
-
 const sendEmail = async (templateParams) => {
   if (!serviceId || !templateId || !publicKey) return false
   await emailjs.send(serviceId, templateId, templateParams, { publicKey })
@@ -23,13 +11,11 @@ const sendEmail = async (templateParams) => {
 }
 
 export const handleDownloadResume = async () => {
-  const location = await getLocation()
   try {
     await sendEmail({
       to_email: 'parshavkhoche16@gmail.com',
       subject: 'Resume Downloaded!',
-      message: `Someone from ${location} just downloaded your resume.`,
-      location,
+      message: 'Someone just downloaded your resume.',
     })
   } catch {
     // The download should still work when EmailJS is unavailable.
@@ -44,14 +30,12 @@ export const handleDownloadResume = async () => {
 }
 
 export const sendProjectContact = async ({ name, email, message, projectName }) => {
-  const location = await getLocation()
   return sendEmail({
     to_email: 'parshavkhoche16@gmail.com',
     subject: `Contact from ${projectName}`,
     message,
     name,
     email,
-    location,
     project_name: projectName,
   })
 }
